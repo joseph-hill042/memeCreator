@@ -20,3 +20,20 @@ body {
 .img-canvas {
   border: 1px solid #000000;
 }
+
+.input-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
+
+.form-group {
+  width: 90%;
+}
+
+.download-button {
+  margin-top: 10px;
+}
