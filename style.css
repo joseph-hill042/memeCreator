@@ -37,3 +37,9 @@ body {
 .download-button {
   margin-top: 10px;
 }
+
+.footer {
+  padding: 30px;
+  background: #333;
+  color: aqua;
+}
