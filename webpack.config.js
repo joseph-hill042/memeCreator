@@ -8,8 +8,15 @@ module.exports = {
   },
   output: {
     path: __dirname + '/dist',
-    filename: '[name].js'
+    filename: '[name].js',
+    publicPath: "/dist/",
   },
+  devServer: {
+    compress: true,
+    port: 8000,
+    hot: true,
+  },
+  devtool: "source-map",
   module: {
     rules: [
       {
@@ -24,7 +31,23 @@ module.exports = {
       },
       {
         test: /\.(less|css)$/,
-        use: ['style-loader', 'css-loader', 'less-loader']
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'less-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+        ]
       },
       {
         test: /\.(svg|eot|ttf|woff|woff2)$/,
@@ -55,5 +78,6 @@ module.exports = {
       $: 'jquery',
       jquery: 'jquery'
     }),
+    new webpack.HotModuleReplacementPlugin(),
   ],
 };
