@@ -10,6 +10,7 @@ class Memes {
     this.$bottomTextInput = document.querySelector('#bottomText');
     this.$imageInput = document.querySelector('#image');
     this.$downloadButton = document.querySelector('#downloadMeme');
+    this.createCanvas();
     this.addEventListeners();
   }
 
@@ -20,7 +21,7 @@ class Memes {
     this.$canvas.width = canvasWidth;
   };
 
-  createMeme(e) {
+  createMeme() {
     let context = this.$canvas.getContext('2d');
 
     if (this.$imageInput.files && this.$imageInput.files[0]) {
@@ -75,8 +76,31 @@ class Memes {
     this.createMeme = this.createMeme.bind(this);
     let inputNodes = [this.$topTextInput, this.$bottomTextInput, this.$imageInput];
     inputNodes.forEach(element => element.addEventListener('keyup', this.createMeme));
-    inputNodes.forEach(element => element.addEventListener('change', this.createMeme))
+    inputNodes.forEach(element => element.addEventListener('change', this.createMeme));
+    this.$downloadButton.addEventListener('click', this.downloadMeme.bind(this));
   };
+
+  downloadMeme() {
+
+    // form validation to make sure meme contains image and bottom text
+    if(!this.$imageInput.files[0]) {
+      this.$imageInput.parentElement.classList.add('has-error');
+      return;
+    }
+    if(this.$bottomTextInput.value === '') {
+      this.$imageInput.parentElement.classList.remove('has-error');
+      this.$bottomTextInput.parentElement.classList.add('has-error');
+      return;
+    }
+    this.$imageInput.parentElement.classList.remove('has-error');
+    this.$bottomTextInput.parentElement.classList.remove('has-error');
+
+    // converts canvas to base64 png
+    const imageSource = this.$canvas.toDataURL('image/png');
+    let att = document.createAttribute('href');
+    att.value = imageSource.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+    this.$downloadButton.setAttribute(att);
+  }
 }
 
 new Memes();
