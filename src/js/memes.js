@@ -30,10 +30,37 @@ class Memes {
         let image = new Image();
 
         image.onload = () => {
+          // set canvas size to the size of added image
           this.$canvas.height = image.height;
           this.$canvas.width = image.width;
           context.clearRect(0, 0, this.$canvas.height, this.$canvas.width);
           context.drawImage(image,0,0);
+
+          // set font options
+          let fontSize = ((this.$canvas.width + this.$canvas.height) / 2) * 4 / 100;
+          context.font = `${fontSize}pt sans-serif`;
+          context.textAlign = 'center';
+          context.textBaseline = 'top';
+
+          // for stroke text
+          context.lineWidth = fontSize/5;
+          context.strokeStyle = 'black';
+
+          // for fill text
+          context.fillStyle = 'white';
+          context.lineJoin = 'round';
+
+          // get value for top & bottom text from inputs
+          const topText = this.$topTextInput.value.toUpperCase();
+          const bottomText = this.$bottomTextInput.value.toUpperCase();
+
+          // render top text
+          context.strokeText(topText, this.$canvas.width/2, this.$canvas.height*(5/100));
+          context.fillText(topText, this.$canvas.width/2, this.$canvas.height*(5/100));
+
+          // render bottom text
+          context.strokeText(bottomText, this.$canvas.width/2, this.$canvas.height*(90/100));
+          context.fillText(bottomText, this.$canvas.width/2, this.$canvas.height*(90/100));
         };
 
         image.src = reader.result;
