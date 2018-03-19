@@ -81,25 +81,26 @@ class Memes {
   };
 
   downloadMeme() {
-
+    console.log('Download meme running...');
     // form validation to make sure meme contains image and bottom text
     if(!this.$imageInput.files[0]) {
       this.$imageInput.parentElement.classList.add('has-error');
       return;
     }
-    if(this.$bottomTextInput.value === '') {
+    else if(this.$bottomTextInput.value === '') {
       this.$imageInput.parentElement.classList.remove('has-error');
       this.$bottomTextInput.parentElement.classList.add('has-error');
       return;
-    }
-    this.$imageInput.parentElement.classList.remove('has-error');
-    this.$bottomTextInput.parentElement.classList.remove('has-error');
+    } else {
+      this.$imageInput.parentElement.classList.remove('has-error');
+      this.$bottomTextInput.parentElement.classList.remove('has-error');
 
-    // converts canvas to base64 png
-    const imageSource = this.$canvas.toDataURL('image/png');
-    let att = document.createAttribute('href');
-    att.value = imageSource.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
-    this.$downloadButton.setAttribute(att);
+      // converts canvas to base64 png
+      const imageSource = this.$canvas.toDataURL('image/png');
+      let attr = document.createAttribute('href');
+      attr.value = imageSource.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+      this.$downloadButton.setAttributeNode(attr);
+    }
   }
 }
 
