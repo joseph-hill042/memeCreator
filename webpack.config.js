@@ -55,7 +55,7 @@ module.exports = {
   },
   devServer: { // Configuration for webpack-dev-server
     compress: true,
-    port: 8000,
+    port: 8080,
     hot: true,
   },
   module: {
@@ -93,7 +93,12 @@ module.exports = {
               }
             },
           ],
-          fallback: 'style-loader',
+          fallback: {
+            loader: 'style-loader',
+            options: {
+              sourceMap: true
+            }
+          },
         })
       },
       {
